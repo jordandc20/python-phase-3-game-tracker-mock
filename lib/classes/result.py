@@ -1,31 +1,40 @@
 class Result:
-    
-    all= []
-
+    all=[]
     def __init__(self, player, game, score):
-        if 1 <= score <= 5000:
-            self.player = player
-            self.game = game
-            self.score = score
-            Result.all.append(self)
-            
-    @classmethod
-    def get_all(cls):
-        return cls.all
-            
+        self.player = player
+        self.game = game
+        self.score = score
+        Result.all.append(self)
+        
+    @property
+    def score(self):
+        return self._score
     
+    @score.setter
+    def score(self,input):
+        if isinstance(input, (int,float)) and 1<= input <= 5_000:
+            self._score = input 
+            
+    @property
+    def player(self):
+        return self._player
+    
+    @player.setter
+    def player(self,input):
+        from .player import Player
+        if isinstance(input, Player):
+            self._player = input 
+            
+    @property
+    def game(self):
+        return self._game
+    
+    @game.setter
+    def game(self,input):
+        from .game import Game
+        if isinstance(input, Game):
+            self._game = input 
 
-
-# Result property player
-    # Returns the player for the Result
-    # Players must be Player instances
-# Result property game
-    # Returns the game that was played
-    # Games must be Game instances
-
-
-# Result __init__(self, player, game, score)
-# Result is initialized with a Player instance, a Game instance, and a score (number)
-# Result property score
-# Returns the score for the Result instance
-# Scores must be integers between 1 and 5000, inclusive
+    @classmethod
+    def get_results(cls):
+        return cls.all
